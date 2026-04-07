@@ -33,12 +33,10 @@ const App = () => {
   return (
     <div className='bg-black h-screen text-white flex flex-col'>
 
-      {/* Cards Section */}
       <div className='h-[82%] overflow-auto p-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
         {printUserData}
       </div>
 
-      {/* Pagination */}
       <PrevNext index={index} setIndex={setIndex} setUserData={setUserData} />
 
     </div>
