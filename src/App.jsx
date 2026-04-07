@@ -1,50 +1,46 @@
 import React, { useEffect, useState } from 'react'
-import Card from './components/card'
+import Card from './components/Card'
+import PrevNext from './components/PrevNext'
 import axios from 'axios'
 
 const App = () => {
   const [userData, setUserData] = useState([])
   const [index, setIndex] = useState(1)
 
-  const getData = async() => {
-    const response = await axios.get(`https://picsum.photos/v2/list?page=${index}&limit=15`)
+  const getData = async () => {
+    const response = await axios.get(
+      `https://picsum.photos/v2/list?page=${index}&limit=20`
+    )
     setUserData(response.data)
   }
 
-  useEffect(function(){
+  useEffect(() => {
     getData()
-  },[index])
+  }, [index])
 
-  let printUserData = <h2 className='font-medium text-gray-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>LOADING...</h2>
+  let printUserData = (
+    <h2 className='text-gray-500 text-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+      Loading...
+    </h2>
+  )
 
-  if(userData.length>0){
-    printUserData = userData.map((elem,idx)=>{
-      return (
-        <div key={idx}>
-          <Card elem={elem}/>
-        </div>
-      )
-    })
+  if (userData.length > 0) {
+    printUserData = userData.map((elem) => (
+      <Card key={elem.id} elem={elem} />
+    ))
   }
-  
+
   return (
-    <div className='bg-black overflow-auto h-screen p-10 text-white'>
-      <h1 className='fixed bg-gray-200 text-black text-6xl'>{index}</h1>
-      <div className='flex flex-wrap gap-5 pb-10'>
+    <div className='bg-black h-screen text-white flex flex-col'>
+
+      {/* Cards Section */}
+      <div className='h-[82%] overflow-auto p-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
         {printUserData}
       </div>
-      <div className='flex justify-center items-center gap-5 p-4'>
-        <button className='bg-gray-600 font-bold text-white px-5 py-5 rounded cursor-pointer active:scale-95' onClick={()=>{
-          if(index>1){
-            setIndex(index=>index-1)
-            setUserData([])
-          }
-        }}>Prev</button>
-        <button className='bg-gray-600 font-bold text-white px-5 py-5 rounded cursor-pointer active:scale-95' onClick={()=>{
-          setIndex(index=>index+1)
-          setUserData([])
-        }}>Next</button>
-      </div>
+
+      {/* Pagination */}
+      <PrevNext index={index} setIndex={setIndex} setUserData={setUserData} />
+
     </div>
   )
 }

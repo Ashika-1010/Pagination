@@ -1,12 +1,25 @@
 import React from 'react'
 
-const Card = ({elem}) => {
+const Card = ({ elem }) => {
   return (
     <a href={elem.url} target='_blank' rel='noopener noreferrer'>
-        <div className='h-55 w-55 bg-white rounded-2xl'>
-        <img className='h-full w-full object-cover rounded-2xl' src={elem.download_url} alt="" />
+      
+      <div className='bg-zinc-900 rounded-xl overflow-hidden shadow-md hover:scale-105 transition duration-300'>
+        
+        <img 
+          className='w-full h-48 object-cover'
+          src={elem.download_url} 
+          alt=""
+        />
+
+        <div className='p-2'>
+          <h2 className='text-sm font-semibold text-white truncate'>
+            {elem.author}
+          </h2>
         </div>
-        <h2 className='font-bold'>{elem.author}</h2>
+
+      </div>
+
     </a>
   )
 }
